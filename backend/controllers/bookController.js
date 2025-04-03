@@ -10,7 +10,19 @@ const getBooks = async (req, res) => {
 
 // get a single Book
 const getBook = async (req, res) => {
-    res.json({ mssg: 'single' })
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such book' })
+    }
+
+    const book = await Book.findById(id)
+
+    if (!book) {
+        return res.status(404).json({ error: 'No such book' })
+    }
+
+    res.status(200).json(book)
 }
 
 // create new Book
