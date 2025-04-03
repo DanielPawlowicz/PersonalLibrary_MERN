@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 // get all Books
 const getBooks = async (req, res) => {
-    res.json({ mssg: 'all' })
+    const books = await Book.find({})
+
+    res.status(200).json(books)
 }
 
 // get a single Book
