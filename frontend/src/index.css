@@ -36,3 +36,11 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
+
+header h2 {
+  font-weight: 600;
+}
+
+header h4 {
+  font-weight: 500;
+}

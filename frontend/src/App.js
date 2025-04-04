@@ -1,7 +1,8 @@
-import Bookshelf from './components/Bookshelf';
+import Bookshelf from './pages/Bookshelf';
 import Navbar from './components/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Wishlist from './components/Wishlist';
+import Wishlist from './pages/Wishlist';
+import AddBookForm from './pages/AddBookForm';
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
             <Route
               path="/wishlist"
               element={<Wishlist />}
+            />
+            <Route
+              path="/addBook"
+              element={<AddBookForm />}
             />
           </Routes>
         </div>
