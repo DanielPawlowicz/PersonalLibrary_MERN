@@ -1,8 +1,14 @@
 import React from 'react'
+import { useBooksContext } from '../hooks/useBooksContext'
 
-const BookDetails = () => {
+const BookDetails = ({ book }) => {
+
+    const { dispatch } = useBooksContext()
+
     return (
-        <div>BookDetails</div>
+        <div className='book-details'>
+            <h4>{book.title}</h4>
+        </div>
     )
 }
 
