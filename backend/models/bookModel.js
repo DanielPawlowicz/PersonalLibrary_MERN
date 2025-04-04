@@ -19,6 +19,10 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
+    tags: {
+        type: [String],
+        required: false
+    },
     description: {
         type: String,
         required: false
