@@ -43,9 +43,9 @@ const createBook = async (req, res) => {
     if (!isOwned) {
         emptyFields.push('isOwned')
     }
-    if (!status) {
-        emptyFields.push('status')
-    }
+    // if (!status) {
+    //     emptyFields.push('status')
+    // }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields ', emptyFields })
     }

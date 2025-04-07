@@ -8,7 +8,7 @@ const AddBookForm = () => {
     const [author, setAuthor] = useState('')
     const [cover, setCover] = useState('')
     const [format, setFormat] = useState('Paperback')
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState('')
     const [description, setDescription] = useState('')
     const [review, setReview] = useState('')
     const [isOwned, setIsOwned] = useState('')
@@ -24,10 +24,37 @@ const AddBookForm = () => {
             .map(tag => tag.trim())
             .filter(tag => tag.length > 0);
 
-        const book = { title, author, cover, format, tagArray, description, review, isOwned, link }
+        const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
 
-        console.log('new book added', book)
+        const response = await fetch('/api/books/', {
+            method: 'POST',
+            body: JSON.stringify(book),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
 
+        if (!response.ok) {
+            setError(json.error)
+            setEmptyFields(json.emptyFields)
+        }
+        if (response.ok) {
+            setTitle('')
+            setAuthor('')
+            setCover('')
+            setFormat('')
+            setTags('')
+            setDescription('')
+            setReview('')
+            setIsOwned('')
+            setLink('')
+
+            setError(null)
+            setEmptyFields([])
+            console.log('new book added', json)
+            dispatch({ type: 'CREATE_BOOK', payload: json })
+        }
     }
 
 
@@ -102,7 +129,7 @@ const AddBookForm = () => {
                         value="true"
                         checked={isOwned === 'true'}
                         onChange={(e) => setIsOwned(e.target.value)}
-                        className={emptyFields.includes('isOwned') ? 'error' : ''}
+                    // className={emptyFields.includes('isOwned') ? 'error' : ''}
                     />
                     Yes, I already have this book
                 </label>
@@ -113,7 +140,7 @@ const AddBookForm = () => {
                         value="false"
                         checked={isOwned === 'false'}
                         onChange={(e) => setIsOwned(e.target.value)}
-                        className={emptyFields.includes('isOwned') ? 'error' : ''}
+                    // className={emptyFields.includes('isOwned') ? 'error' : ''}
                     />
                     No, but I wish to have this book
                 </label>
