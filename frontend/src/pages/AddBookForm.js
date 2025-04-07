@@ -20,9 +20,8 @@ const AddBookForm = () => {
         e.preventDefault()
 
         const tagArray = tags
-            .split(', ')
-            .map(tag => tag.trim())
-            .filter(tag => tag.length > 0);
+            ? tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+            : []
 
         const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
 
@@ -52,7 +51,8 @@ const AddBookForm = () => {
 
             setError(null)
             setEmptyFields([])
-            console.log('new book added', json)
+            // console.log('new book added', json)
+            alert(`Book ${json.title} from ${json.author} has been added succesfully`)
             dispatch({ type: 'CREATE_BOOK', payload: json })
         }
     }
@@ -63,7 +63,7 @@ const AddBookForm = () => {
             <form className='create-form' onSubmit={handleSubmit}>
                 <h3>Add a New Book</h3>
 
-                <label>Title:</label>
+                <label>Title:<span className='required'>&nbsp;*</span></label>
                 <input
                     type="text"
                     onChange={(e) => setTitle(e.target.value)}
@@ -71,7 +71,7 @@ const AddBookForm = () => {
                     className={emptyFields.includes('title') ? 'error' : ''}
                 />
 
-                <label>Author:</label>
+                <label>Author:<span className='required'>&nbsp;*</span></label>
                 <input
                     type="text"
                     onChange={(e) => setAuthor(e.target.value)}
@@ -80,13 +80,14 @@ const AddBookForm = () => {
                 />
 
                 <label>Cover:</label>
+                <span>(You can paste here a link to the book cover photo e.g. from google graphics)</span>
                 <input
                     type="text"
                     onChange={(e) => setCover(e.target.value)}
                     value={cover}
                 />
 
-                <label>Format:</label>
+                <label>Format:<span className='required'>&nbsp;*</span></label>
                 <select
                     id="format"
                     onChange={(e) => setFormat(e.target.value)}
@@ -98,9 +99,37 @@ const AddBookForm = () => {
                     <option value="PDF">PDF</option>
                     <option value="Other">Other</option>
                 </select>
+                <br />
+
+                <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
+                <div className="radio-group">
+                    <label className="radio-option">
+                        <input
+                            type="radio"
+                            name="ownsBook"
+                            value="true"
+                            checked={isOwned === 'true'}
+                            onChange={(e) => setIsOwned(e.target.value)}
+                            className={emptyFields.includes('isOwned') ? 'error' : ''}
+                        />
+                        <span>Yes, I already have this book</span>
+                    </label>
+
+                    <label className="radio-option">
+                        <input
+                            type="radio"
+                            name="ownsBook"
+                            value="false"
+                            checked={isOwned === 'false'}
+                            onChange={(e) => setIsOwned(e.target.value)}
+                            className={emptyFields.includes('isOwned') ? 'error' : ''}
+                        />
+                        <span>No, but I wish to have this book</span>
+                    </label>
+                </div>
 
                 <label>Tags:</label>
-                <span>* Type in tags separated with a coma and a space, e.g.: fantasy, classic, war</span>
+                <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
                 <input
                     type="text"
                     onChange={(e) => setTags(e.target.value)}
@@ -121,32 +150,8 @@ const AddBookForm = () => {
                     value={review}
                 />
 
-                <label>Do you already have this book?</label>
-                <label>
-                    <input
-                        type="radio"
-                        name="ownsBook"
-                        value="true"
-                        checked={isOwned === 'true'}
-                        onChange={(e) => setIsOwned(e.target.value)}
-                    // className={emptyFields.includes('isOwned') ? 'error' : ''}
-                    />
-                    Yes, I already have this book
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        name="ownsBook"
-                        value="false"
-                        checked={isOwned === 'false'}
-                        onChange={(e) => setIsOwned(e.target.value)}
-                    // className={emptyFields.includes('isOwned') ? 'error' : ''}
-                    />
-                    No, but I wish to have this book
-                </label>
-
                 <label>Link:</label>
-                <span>* you can add a link related with the book: store, review site etc.</span>
+                <span>(You can add a link related with the book: store, review site etc.)</span>
                 <input
                     type="text"
                     onChange={(e) => setLink(e.target.value)}

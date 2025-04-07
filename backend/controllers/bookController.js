@@ -44,7 +44,7 @@ const createBook = async (req, res) => {
         emptyFields.push('isOwned')
     }
     // if (!status) {
-    //     emptyFields.push('status')
+    // emptyFields.push('status')
     // }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields ', emptyFields })
@@ -52,7 +52,7 @@ const createBook = async (req, res) => {
 
     // add doc to db
     try {
-        const book = await Book.create({ title, author, cover, format, description, review, notes, isOwned, status, link })
+        const book = await Book.create({ title, author, cover, format, description, review, notes, isOwned, link })
         res.status(200).json(book)
     } catch (err) {
         res.status(400).json({ error: err.message })
