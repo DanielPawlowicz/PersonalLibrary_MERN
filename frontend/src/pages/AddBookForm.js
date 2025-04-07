@@ -39,6 +39,9 @@ const AddBookForm = () => {
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
+            const ownedBoolean = isOwned === 'true';
+            const place = ownedBoolean ? 'Bookshelf' : 'Wishlist';
+
             setTitle('')
             setAuthor('')
             setCover('')
@@ -51,8 +54,9 @@ const AddBookForm = () => {
 
             setError(null)
             setEmptyFields([])
+
             // console.log('new book added', json)
-            alert(`Book ${json.title} from ${json.author} has been added succesfully`)
+            alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
             dispatch({ type: 'CREATE_BOOK', payload: json })
         }
     }
@@ -110,7 +114,7 @@ const AddBookForm = () => {
                             value="true"
                             checked={isOwned === 'true'}
                             onChange={(e) => setIsOwned(e.target.value)}
-                            className={emptyFields.includes('isOwned') ? 'error' : ''}
+                        // className={emptyFields.includes('isOwned') ? 'error' : ''}
                         />
                         <span>Yes, I already have this book</span>
                     </label>
@@ -122,7 +126,7 @@ const AddBookForm = () => {
                             value="false"
                             checked={isOwned === 'false'}
                             onChange={(e) => setIsOwned(e.target.value)}
-                            className={emptyFields.includes('isOwned') ? 'error' : ''}
+                        // className={emptyFields.includes('isOwned') ? 'error' : ''}
                         />
                         <span>No, but I wish to have this book</span>
                     </label>
