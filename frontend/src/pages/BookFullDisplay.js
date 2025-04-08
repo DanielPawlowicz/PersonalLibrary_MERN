@@ -1,8 +1,8 @@
 import React from 'react'
 
-const BookFullDisplay = ({ book }) => {
+const BookFullDisplay = ({ book, setIsDisplayed }) => {
     return (
-        <div>BookFullDisplay
+        <div className='book-full'>BookFullDisplay
             <h2>{book.title}</h2>
         </div>
     )

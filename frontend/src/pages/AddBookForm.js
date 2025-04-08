@@ -84,7 +84,7 @@ const AddBookForm = () => {
                 />
 
                 <label>Cover:</label>
-                <span>(You can paste here a link to the book cover photo e.g. from google graphics)</span>
+                <span>(You can paste here a link to the book cover photo e.g. from google graphics. The link needs to end with the graphics format: '.jpg', '.png', '.webp' etc.)</span>
                 <input
                     type="text"
                     onChange={(e) => setCover(e.target.value)}
