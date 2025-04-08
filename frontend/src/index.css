@@ -254,3 +254,33 @@ input.error {
   top: 260px;
   right: 20px;
 }
+
+
+
+
+/* Book Full Display */
+
+.book-full {
+  position: fixed;
+  top: 10vh;
+  left: 10vw;
+  width: 75vw;
+  height: 75vh;
+  background-color: white;
+  z-index: 1001;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  /* overflow: auto; */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
