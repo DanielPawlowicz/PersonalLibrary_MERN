@@ -1,10 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { IoMdClose } from "react-icons/io";
+import { useBooksContext } from '../hooks/useBooksContext';
 
 const BookFullDisplay = ({ book, setIsDisplayed }) => {
 
-    console.log("Tags:", book);
+    const { dispatch } = useBooksContext()
+
+    const handleDelete = async () => {
+        const response = await fetch('/api/books/' + book._id, {
+            method: 'DELETE'
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            dispatch({ type: 'DELETE_BOOK', payload: json })
+        }
+    }
+
 
     return ReactDOM.createPortal(
         <>
@@ -22,7 +35,22 @@ const BookFullDisplay = ({ book, setIsDisplayed }) => {
                             ))
                         }
                     </ul>
-                    {/* more book details here */}
+
+                    {
+                        book.description &&
+                        <p className='book-full-info'><span className='book-full-label'>Description: </span>{book.description}</p>
+                    }
+                    {
+                        book.review &&
+                        <p className='book-full-info'><span className='book-full-label'>Review: </span>{book.review}</p>
+                    }
+                    {
+                        book.link &&
+                        <p className='book-full-info'><span className='book-full-label'>Link: </span><a href={book.link} target="_blank">{book.link}</a></p>
+                    }
+
+                    <button className='delete' onClick={() => handleDelete()}>Delete Book</button>
+
                 </div>
                 <div className='book-full-right'>
                     {
