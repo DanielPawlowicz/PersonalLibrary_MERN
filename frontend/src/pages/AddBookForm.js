@@ -19,9 +19,13 @@ const AddBookForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // console.log(tags)
+
         const tagArray = tags
             ? tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
             : []
+
+        // console.log(tagArray)
 
         const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
 
