@@ -335,3 +335,8 @@ input.error {
   width: 150%;
   height: 150%;
 }
+
+.active-navbar-link {
+  color: limegreen;
+  text-decoration: underline;
+}
