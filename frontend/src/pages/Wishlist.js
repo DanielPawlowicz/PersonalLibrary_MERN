@@ -5,6 +5,8 @@ import { useBooksContext } from '../hooks/useBooksContext'
 const Wishlist = () => {
     const { books, dispatch } = useBooksContext()
     const [trigger, setTrigger] = useState(0)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedFormats, setSelectedFormats] = useState(new Set())
 
     const fetchBooks = useCallback(async () => {
         const response = await fetch('/api/books')
@@ -21,16 +23,57 @@ const Wishlist = () => {
 
     const refetchBooks = () => setTrigger(prev => prev + 1)
 
-    console.log('All books:', books)
+    // console.log('All books:', books)
 
     const wishedBooks = books?.filter(book => book.isOwned === false || book.isOwned === 'false') || []
 
-    console.log(wishedBooks)
+    // console.log(wishedBooks)
+
+    const filteredBooks = wishedBooks.filter(book => {
+        const matchesSearch = [book.title, book.author, ...(book.tags || [])]
+            .join(' ')
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+
+        const matchesFormat = selectedFormats.size === 0 || selectedFormats.has(book.format)
+
+        return matchesSearch && matchesFormat
+    })
 
     return (
         <div className='home'>
+            <div className='filters-bar'>
+                <input
+                    type="text"
+                    placeholder="Search by title, author, or tags"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+                <div className='filter-checkboxes'>
+                    {['Paperback', 'Ebook Reader', 'Pdf', 'Other'].map(format => (
+                        <label key={format}>
+                            <input
+                                type="checkbox"
+                                value={format}
+                                checked={selectedFormats.has(format)}
+                                onChange={(e) => {
+                                    const updated = new Set(selectedFormats)
+                                    if (e.target.checked) {
+                                        updated.add(format)
+                                    } else {
+                                        updated.delete(format)
+                                    }
+                                    setSelectedFormats(updated)
+                                }}
+                            />
+                            {format}
+                        </label>
+                    ))}
+                </div>
+            </div>
             <div className='books'>
-                {wishedBooks.map((book) => (
+                {filteredBooks.map((book) => (
                     <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
                 ))}
             </div>
