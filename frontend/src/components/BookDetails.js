@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useBooksContext } from '../hooks/useBooksContext'
-import BookFullDisplay from '../pages/BookFullDisplay';
+import BookFullDisplay from './BookFullDisplay';
 import { TbPdf } from "react-icons/tb"; // pdf
 import { MdOutlineDeviceUnknown } from "react-icons/md"; // other
 import { GiBlackBook } from "react-icons/gi"; // book

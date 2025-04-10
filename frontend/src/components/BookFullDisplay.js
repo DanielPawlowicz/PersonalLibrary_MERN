@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { IoMdClose } from "react-icons/io";
 import { useBooksContext } from '../hooks/useBooksContext';
+import BookUpdateForm from './BookUpdateForm';
 
 const BookFullDisplay = ({ book, setIsDisplayed }) => {
 
     const { dispatch } = useBooksContext()
+    const [isEdit, setIsEdit] = useState(false);
 
     const handleDelete = async () => {
         const response = await fetch('/api/books/' + book._id, {
@@ -50,6 +52,7 @@ const BookFullDisplay = ({ book, setIsDisplayed }) => {
                     }
 
                     <button className='delete' onClick={() => handleDelete()}>Delete Book</button>
+                    <button className='edit' onClick={() => setIsEdit(true)}>Edit Book</button>
 
                 </div>
                 <div className='book-full-right'>
@@ -59,6 +62,8 @@ const BookFullDisplay = ({ book, setIsDisplayed }) => {
                 </div>
                 <div className='clear'></div>
             </div>
+            {isEdit && <BookUpdateForm book={book} setIsEdit={setIsEdit} />}
+
         </>,
         document.body // render it outside the component tree
     )
