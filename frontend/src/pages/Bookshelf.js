@@ -59,7 +59,7 @@ const Bookshelf = () => {
                 />
 
                 <div className='filter-checkboxes'>
-                    {['Paperback', 'Ebook Reader', 'Pdf', 'Other'].map(format => (
+                    {['Paperback', 'Ebook Reader', 'PDF', 'Other'].map(format => (
                         <label key={format}>
                             <input
                                 type="checkbox"
@@ -79,7 +79,6 @@ const Bookshelf = () => {
                         </label>
                     ))}
 
-                    {/* Sort checkboxes styled similarly */}
                     <label>
                         <input
                             type="checkbox"
