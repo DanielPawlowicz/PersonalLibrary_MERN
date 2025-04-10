@@ -23,7 +23,7 @@ const Bookshelf = () => {
         <div className='home'>
             <div className='books'>
                 {books && books.map((book) => (
-                    <BookDetails key={book._id} book={book} />
+                    <BookDetails key={book._id} thisBook={book} />
                 ))}
             </div>
         </div>

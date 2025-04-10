@@ -7,10 +7,12 @@ import { GiBlackBook } from "react-icons/gi"; // book
 import { MdOutlineTabletMac } from "react-icons/md"; // ebook reader
 
 
-const BookDetails = ({ book }) => {
+const BookDetails = ({ thisBook }) => {
 
-    const { dispatch } = useBooksContext()
-    const [isDisplayed, setIsDisplayed] = useState(false);
+    const { books } = useBooksContext()
+    const [isDisplayed, setIsDisplayed] = useState(false)
+
+    const book = books.find(b => b._id === thisBook._id) || thisBook
 
     // Format icon logic
     const getFormatIcon = (format) => {

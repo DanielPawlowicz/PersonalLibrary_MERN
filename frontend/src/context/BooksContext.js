@@ -17,6 +17,13 @@ export const booksReducer = (state, action) => {
             return {
                 books: state.books.filter((w) => w._id !== action.payload._id)
             }
+        case 'UPDATE_BOOK':
+            return {
+                ...state,
+                books: state.books.map(book =>
+                    book._id === action.payload._id ? action.payload : book
+                )
+            }
         default:
             return state
     }

@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useBooksContext } from '../hooks/useBooksContext'
 
-const BookUpdateForm = ({ book }) => {
+const BookUpdateForm = ({ book, setIsEdit }) => {
 
     const { dispatch } = useBooksContext()
     const [title, setTitle] = useState(book.title)
     const [author, setAuthor] = useState(book.author)
     const [cover, setCover] = useState(book.cover)
     const [format, setFormat] = useState(book.format)
-    const [tags, setTags] = useState(book.tags)
+    const [tags, setTags] = useState(book.tags?.join(', ') || '')
     const [description, setDescription] = useState(book.description)
     const [review, setReview] = useState(book.review)
     const [isOwned, setIsOwned] = useState(book.isOwned)
@@ -27,15 +27,16 @@ const BookUpdateForm = ({ book }) => {
 
         // console.log(tagArray)
 
-        const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
+        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
 
-        const response = await fetch('/api/books/', {
-            method: 'POST',
-            body: JSON.stringify(book),
+        const response = await fetch(`/api/books/${book._id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updatedBook),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
+
         const json = await response.json()
 
         if (!response.ok) {
@@ -43,25 +44,27 @@ const BookUpdateForm = ({ book }) => {
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
-            const ownedBoolean = isOwned === 'true';
-            const place = ownedBoolean ? 'Bookshelf' : 'Wishlist';
+            // const ownedBoolean = isOwned === 'true';
+            // const place = ownedBoolean ? 'Bookshelf' : 'Wishlist';
 
-            setTitle('')
-            setAuthor('')
-            setCover('')
-            setFormat('')
-            setTags('')
-            setDescription('')
-            setReview('')
-            setIsOwned('')
-            setLink('')
+            setTitle(book.title)
+            setAuthor(book.author)
+            setCover(book.cover)
+            setFormat(book.format)
+            setTags(book.tags)
+            setDescription(book.description)
+            setReview(book.review)
+            setIsOwned(book.isOwned)
+            setLink(book.link)
 
             setError(null)
             setEmptyFields([])
 
             // console.log('new book added', json)
-            alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
-            dispatch({ type: 'CREATE_BOOK', payload: json })
+            // alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
+            alert(`Book has been updated successfully`)
+            dispatch({ type: 'UPDATE_BOOK', payload: json })
+            setIsEdit(false)
         }
     }
 
@@ -69,7 +72,7 @@ const BookUpdateForm = ({ book }) => {
     return (
         <div className='edit-form-container'>
             <form className='edit-form' onSubmit={handleSubmit}>
-                <h3>Add a New Book</h3>
+                <h3>Edit Book data</h3>
 
                 <label>Title:<span className='required'>&nbsp;*</span></label>
                 <input
@@ -100,7 +103,7 @@ const BookUpdateForm = ({ book }) => {
                     id="format"
                     onChange={(e) => setFormat(e.target.value)}
                     value={format}
-                    className={emptyFields.includes('title') ? 'error' : ''}
+                    className={emptyFields.includes('format') ? 'error' : ''}
                 >
                     <option value="Paperback">Paperback</option>
                     <option value="Ebook Reader">Ebook Reader</option>
@@ -109,7 +112,19 @@ const BookUpdateForm = ({ book }) => {
                 </select>
                 <br />
 
-                <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
+                <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
+                <select
+                    id="place"
+                    onChange={(e) => setIsOwned(e.target.value)}
+                    value={isOwned}
+                    className={emptyFields.includes('isOwned') ? 'error' : ''}
+                >
+                    <option value='true'>Bookshelf</option>
+                    <option value='false'>Wishlist</option>
+                </select>
+                <br />
+
+                {/* <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
                 <div className="radio-group">
                     <label className="radio-option">
                         <input
@@ -134,7 +149,7 @@ const BookUpdateForm = ({ book }) => {
                         />
                         <span>No, but I wish to have this book</span>
                     </label>
-                </div>
+                </div> */}
 
                 <label>Tags:</label>
                 <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
