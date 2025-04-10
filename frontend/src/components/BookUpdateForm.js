@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useBooksContext } from '../hooks/useBooksContext'
 
-const BookUpdateForm = ({ book, setIsEdit }) => {
+const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
     const { dispatch } = useBooksContext()
     const [title, setTitle] = useState(book.title)
@@ -64,7 +64,8 @@ const BookUpdateForm = ({ book, setIsEdit }) => {
             // alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
             alert(`Book has been updated successfully`)
             dispatch({ type: 'UPDATE_BOOK', payload: json })
-            setIsEdit(false)
+            if (refetchBooks) refetchBooks()
+            if (setIsEdit) setIsEdit(false)
         }
     }
 

@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import { useBooksContext } from '../hooks/useBooksContext';
 import BookUpdateForm from './BookUpdateForm';
 
-const BookFullDisplay = ({ book, setIsDisplayed }) => {
+const BookFullDisplay = ({ book, setIsDisplayed, refetchBooks }) => {
 
     const { dispatch } = useBooksContext()
     const [isEdit, setIsEdit] = useState(false);
@@ -62,7 +62,7 @@ const BookFullDisplay = ({ book, setIsDisplayed }) => {
                 </div>
                 <div className='clear'></div>
             </div>
-            {isEdit && <BookUpdateForm book={book} setIsEdit={setIsEdit} />}
+            {isEdit && <BookUpdateForm book={book} setIsEdit={setIsEdit} refetchBooks={refetchBooks} />}
 
         </>,
         document.body // render it outside the component tree

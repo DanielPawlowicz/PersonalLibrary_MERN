@@ -7,7 +7,7 @@ import { GiBlackBook } from "react-icons/gi"; // book
 import { MdOutlineTabletMac } from "react-icons/md"; // ebook reader
 
 
-const BookDetails = ({ thisBook }) => {
+const BookDetails = ({ thisBook, refetchBooks }) => {
 
     const { books } = useBooksContext()
     const [isDisplayed, setIsDisplayed] = useState(false)
@@ -47,7 +47,7 @@ const BookDetails = ({ thisBook }) => {
             <span className='book-details-author'>{book.author}</span><br />
             <button onClick={() => { setIsDisplayed(true) }}>More...</button>
             {
-                book && isDisplayed && <BookFullDisplay book={book} setIsDisplayed={setIsDisplayed} />
+                book && isDisplayed && <BookFullDisplay book={book} setIsDisplayed={setIsDisplayed} refetchBooks={refetchBooks} />
             }
         </div>
     )
