@@ -330,3 +330,8 @@ input.error {
 .clear {
   clear: both;
 }
+
+.book-cover-full {
+  width: 150%;
+  height: 150%;
+}

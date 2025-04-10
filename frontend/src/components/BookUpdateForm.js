@@ -62,7 +62,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
             // console.log('new book added', json)
             // alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
-            alert(`Book has been updated successfully`)
+            // alert(`Book has been updated successfully`)
             dispatch({ type: 'UPDATE_BOOK', payload: json })
             if (refetchBooks) refetchBooks()
             if (setIsEdit) setIsEdit(false)
