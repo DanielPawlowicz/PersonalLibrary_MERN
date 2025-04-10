@@ -364,8 +364,7 @@ input.error {
 .filter-checkboxes {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  align-items: baseline;
+  gap: 10px;
 }
 
 .filter-checkboxes label {
@@ -378,7 +377,6 @@ input.error {
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  user-select: none;
   border: 1px solid #ccc;
 }
 

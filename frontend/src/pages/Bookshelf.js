@@ -8,6 +8,7 @@ const Bookshelf = () => {
     const [trigger, setTrigger] = useState(0)
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedFormats, setSelectedFormats] = useState(new Set())
+    const [sortOrder, setSortOrder] = useState('none') // 'asc', 'desc', or 'none'
 
     const fetchBooks = useCallback(async () => {
         const response = await fetch('/api/books')
@@ -41,6 +42,12 @@ const Bookshelf = () => {
         return matchesSearch && matchesFormat
     })
 
+    if (sortOrder === 'asc') {
+        filteredBooks.sort((a, b) => a.title.localeCompare(b.title))
+    } else if (sortOrder === 'desc') {
+        filteredBooks.sort((a, b) => b.title.localeCompare(a.title))
+    }
+
     return (
         <div className='home'>
             <div className='filters-bar'>
@@ -71,6 +78,37 @@ const Bookshelf = () => {
                             {format}
                         </label>
                     ))}
+
+                    {/* Sort checkboxes styled similarly */}
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={sortOrder === 'asc'}
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setSortOrder('asc')
+                                } else {
+                                    setSortOrder('none')
+                                }
+                            }}
+                        />
+                        A → Z
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={sortOrder === 'desc'}
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setSortOrder('desc')
+                                } else {
+                                    setSortOrder('none')
+                                }
+                            }}
+                        />
+                        Z → A
+                    </label>
                 </div>
             </div>
             <div className='books'>
