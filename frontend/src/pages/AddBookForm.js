@@ -11,7 +11,7 @@ const AddBookForm = () => {
     const [tags, setTags] = useState('')
     const [description, setDescription] = useState('')
     const [review, setReview] = useState('')
-    const [isOwned, setIsOwned] = useState('')
+    const [isOwned, setIsOwned] = useState(true)
     const [link, setLink] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
@@ -25,9 +25,11 @@ const AddBookForm = () => {
             ? tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
             : []
 
-        // console.log(tagArray)
+        console.log('isOwned: ' + isOwned)
 
         const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
+
+        console.log(book)
 
         const response = await fetch('/api/books/', {
             method: 'POST',
@@ -49,17 +51,17 @@ const AddBookForm = () => {
             setTitle('')
             setAuthor('')
             setCover('')
-            setFormat('')
+            setFormat('Paperback')
             setTags('')
             setDescription('')
             setReview('')
-            setIsOwned('')
+            setIsOwned(true)
             setLink('')
 
             setError(null)
             setEmptyFields([])
 
-            // console.log('new book added', json)
+            console.log('new book added', json)
             alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
             dispatch({ type: 'CREATE_BOOK', payload: json })
         }
@@ -100,7 +102,7 @@ const AddBookForm = () => {
                     id="format"
                     onChange={(e) => setFormat(e.target.value)}
                     value={format}
-                    className={emptyFields.includes('title') ? 'error' : ''}
+                    className={emptyFields.includes('format') ? 'error' : ''}
                 >
                     <option value="Paperback">Paperback</option>
                     <option value="Ebook Reader">Ebook Reader</option>
@@ -109,7 +111,19 @@ const AddBookForm = () => {
                 </select>
                 <br />
 
-                <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
+                <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
+                <select
+                    id="place"
+                    onChange={(e) => setIsOwned(e.target.value)}
+                    value={isOwned}
+                    className={emptyFields.includes('isOwned') ? 'error' : ''}
+                >
+                    <option value='true'>Bookshelf</option>
+                    <option value='false'>Wishlist</option>
+                </select>
+                <br />
+
+                {/* <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
                 <div className="radio-group">
                     <label className="radio-option">
                         <input
@@ -134,7 +148,7 @@ const AddBookForm = () => {
                         />
                         <span>No, but I wish to have this book</span>
                     </label>
-                </div>
+                </div> */}
 
                 <label>Tags:</label>
                 <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
