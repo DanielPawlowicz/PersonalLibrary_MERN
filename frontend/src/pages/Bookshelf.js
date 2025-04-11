@@ -110,10 +110,26 @@ const Bookshelf = () => {
                     </label>
                 </div>
             </div>
-            <div className='books'>
-                {filteredBooks.map((book) => (
-                    <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
-                ))}
+
+
+
+            <div className='books-by-status'>
+                {['Reading now', 'In queue', 'In the future', 'Already read'].map((status) => {
+                    const booksInStatus = filteredBooks.filter(book => book.status === status)
+
+                    if (booksInStatus.length === 0) return null
+
+                    return (
+                        <div key={status} className='status-section'>
+                            <h5>{status}</h5>
+                            <div className='books'>
+                                {booksInStatus.map(book => (
+                                    <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
+                                ))}
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

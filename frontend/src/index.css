@@ -400,3 +400,13 @@ input.error {
   color: #565656;
   margin: 20px;
 }
+
+.status-section {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 30px;
+}
+
+.status-section>h5 {
+  color: gray;
+  font-weight: 500;
+}
