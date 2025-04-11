@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import { IoMdClose } from "react-icons/io";
 import { useBooksContext } from '../hooks/useBooksContext';
 import BookUpdateForm from './BookUpdateForm';
+import { FaTrashAlt } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
 
 const BookFullDisplay = ({ book, setIsDisplayed, refetchBooks }) => {
 
@@ -51,8 +53,8 @@ const BookFullDisplay = ({ book, setIsDisplayed, refetchBooks }) => {
                         <p className='book-full-info'><span className='book-full-label'>Link: </span><a href={book.link} target="_blank">{book.link}</a></p>
                     }
 
-                    <button className='delete' onClick={() => handleDelete()}>Delete Book</button>
-                    <button className='edit' onClick={() => setIsEdit(true)}>Edit Book</button>
+                    <FaTrashAlt className='delete' onClick={() => handleDelete()} />
+                    <IoSettingsSharp className='edit' onClick={() => setIsEdit(true)} />
 
                 </div>
                 <div className='book-full-right'>

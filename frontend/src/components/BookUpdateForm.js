@@ -125,33 +125,6 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
                 </select>
                 <br />
 
-                {/* <label>Do you already have this book?<span className='required'>&nbsp;*</span></label>
-                <div className="radio-group">
-                    <label className="radio-option">
-                        <input
-                            type="radio"
-                            name="ownsBook"
-                            value="true"
-                            checked={isOwned === 'true'}
-                            onChange={(e) => setIsOwned(e.target.value)}
-                        // className={emptyFields.includes('isOwned') ? 'error' : ''}
-                        />
-                        <span>Yes, I already have this book</span>
-                    </label>
-
-                    <label className="radio-option">
-                        <input
-                            type="radio"
-                            name="ownsBook"
-                            value="false"
-                            checked={isOwned === 'false'}
-                            onChange={(e) => setIsOwned(e.target.value)}
-                        // className={emptyFields.includes('isOwned') ? 'error' : ''}
-                        />
-                        <span>No, but I wish to have this book</span>
-                    </label>
-                </div> */}
-
                 <label>Tags:</label>
                 <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
                 <input

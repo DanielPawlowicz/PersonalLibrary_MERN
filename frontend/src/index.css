@@ -386,3 +386,17 @@ input.error {
   accent-color: var(--primary);
   cursor: pointer;
 }
+
+.delete {
+  color: #cc0000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.edit {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #565656;
+  margin: 20px;
+}
