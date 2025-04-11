@@ -13,6 +13,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
     const [review, setReview] = useState(book.review)
     const [isOwned, setIsOwned] = useState(book.isOwned)
     const [link, setLink] = useState(book.link)
+    const [status, setStatus] = useState(book.status)
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
@@ -27,7 +28,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
         // console.log(tagArray)
 
-        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
+        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, status, link }
 
         const response = await fetch(`/api/books/${book._id}`, {
             method: 'PATCH',
@@ -55,6 +56,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
             setDescription(book.description)
             setReview(book.review)
             setIsOwned(book.isOwned)
+            setStatus(book.status)
             setLink(book.link)
 
             setError(null)
@@ -116,14 +118,27 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
                 <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
                 <select
                     id="place"
-                    onChange={(e) => setIsOwned(e.target.value)}
-                    value={isOwned}
+                    onChange={(e) => setIsOwned(e.target.value === 'true')}
+                    value={isOwned ? 'true' : 'false'}
                     className={emptyFields.includes('isOwned') ? 'error' : ''}
                 >
                     <option value='true'>Bookshelf</option>
                     <option value='false'>Wishlist</option>
                 </select>
                 <br />
+
+                <label>Status:</label>
+                <span>(You can choose it only if you selected "Bookshelf" as a place to store this book)</span>
+                <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    disabled={!isOwned} // disable if Wishlist
+                >
+                    <option value="In queue">In queue</option>
+                    <option value="Reading now">Reading now</option>
+                    <option value="In the future">In the future</option>
+                    <option value="Already read">Already read</option>
+                </select>
 
                 <label>Tags:</label>
                 <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
