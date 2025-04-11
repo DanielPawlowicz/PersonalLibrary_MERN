@@ -1,16 +1,24 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
 /* layout */
 :root {
-  --primary: #1aac83;
-  --error: #e7195a;
+  --primary: #b08968;
+  /* soft brownish gold */
+  --accent: #7f5539;
+  /* darker coffee brown */
+  --error: #e76f51;
+  /* warm reddish */
 }
 
 body {
   background: #f1f1f1;
+  /* background: #fdf6e3; */
   margin: 0;
   font-family: "Poppins";
+  /* font-family: "EB Garamond"; */
 }
 
 header {
@@ -343,7 +351,7 @@ input.error {
 }
 
 .active-navbar-link {
-  color: limegreen;
+  color: var(--accent);
   text-decoration: underline;
 }
 
@@ -373,11 +381,12 @@ input.error {
   gap: 6px;
   font-size: 0.95rem;
   background: #fff;
-  padding: 6px 10px;
+  padding: 0 10px;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   border: 1px solid #ccc;
+  margin-top: -8px;
 }
 
 .filter-checkboxes input[type="checkbox"] {
@@ -388,7 +397,8 @@ input.error {
 }
 
 .delete {
-  color: #cc0000;
+  /* color: #cc0000; */
+  color: var(--error);
   font-size: 1.5rem;
   cursor: pointer;
   margin: 20px;
@@ -409,4 +419,17 @@ input.error {
 .status-section>h5 {
   color: gray;
   font-weight: 500;
+}
+
+.search-icon {
+  font-size: 1.3rem;
+  margin-right: -10px;
+  margin-top: -7px;
+  color: #565656;
+}
+
+.search-bar {
+  padding: 10px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
 }

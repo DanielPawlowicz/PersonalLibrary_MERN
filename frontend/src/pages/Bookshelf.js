@@ -1,6 +1,8 @@
 import { useEffect, useCallback, useState } from 'react'
 import BookDetails from '../components/BookDetails'
 import { useBooksContext } from '../hooks/useBooksContext'
+import { ImSearch } from "react-icons/im";
+
 
 const Bookshelf = () => {
 
@@ -51,11 +53,13 @@ const Bookshelf = () => {
     return (
         <div className='home'>
             <div className='filters-bar'>
+                <ImSearch className="search-icon" />
                 <input
                     type="text"
-                    placeholder="Search by title, author, or tags"
+                    placeholder="Search by title, author, or tags "
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className='search-bar'
                 />
 
                 <div className='filter-checkboxes'>
