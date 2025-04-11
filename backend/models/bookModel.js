@@ -39,10 +39,10 @@ const bookSchema = new Schema({
         type: Boolean,
         required: true
     },
-    // status: {
-    //     type: String,
-    //     required: true
-    // },
+    status: {
+        type: String,
+        required: true
+    },
     // order: {
     //     type: Number,
     //     required: true

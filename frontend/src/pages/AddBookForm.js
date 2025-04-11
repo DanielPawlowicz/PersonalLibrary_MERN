@@ -15,6 +15,7 @@ const AddBookForm = () => {
     const [link, setLink] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
+    const [status, setStatus] = useState('In queue')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,7 +28,7 @@ const AddBookForm = () => {
 
         console.log('isOwned: ' + isOwned)
 
-        const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, link }
+        const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, status, link }
 
         console.log(book)
 
@@ -56,6 +57,7 @@ const AddBookForm = () => {
             setDescription('')
             setReview('')
             setIsOwned(true)
+            setStatus('In queue')
             setLink('')
 
             setError(null)
@@ -122,6 +124,19 @@ const AddBookForm = () => {
                     <option value='false'>Wishlist</option>
                 </select>
                 <br />
+
+                <label>Status:</label>
+                <span>(You can choose it only if you selected "Bookshelf" as a place to store this book)</span>
+                <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    disabled={isOwned === 'false'} // disable if Wishlist
+                >
+                    <option value="In queue">In queue</option>
+                    <option value="Reading now">Reading now</option>
+                    <option value="In the future">In the future</option>
+                    <option value="Already read">Already read</option>
+                </select>
 
                 <label>Tags:</label>
                 <span>(Type in tags separated with a coma and a space, e.g.: fantasy, classic, war)</span>
