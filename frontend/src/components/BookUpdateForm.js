@@ -28,7 +28,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
         // console.log(tagArray)
 
-        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, status, link }
+        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, status: isOwned && !status ? 'In the future' : status, link }
 
         const response = await fetch(`/api/books/${book._id}`, {
             method: 'PATCH',
@@ -130,12 +130,14 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
                 <label>Status:</label>
                 <span>(You can choose it only if you selected "Bookshelf" as a place to store this book)</span>
                 <select
-                    value={status}
+                    value={status || 'In the future'}
                     onChange={(e) => setStatus(e.target.value)}
                     disabled={!isOwned} // disable if Wishlist
                 >
-                    <option value="In queue">In queue</option>
+
+                    <option value="In queue">--- Select Status ---</option>
                     <option value="Reading now">Reading now</option>
+                    <option value="In queue">In queue</option>
                     <option value="In the future">In the future</option>
                     <option value="Already read">Already read</option>
                 </select>
