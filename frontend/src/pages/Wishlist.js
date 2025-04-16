@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState } from 'react'
 import BookDetails from '../components/BookDetails'
 import { useBooksContext } from '../hooks/useBooksContext'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Wishlist = () => {
     const { books, dispatch } = useBooksContext()
@@ -8,9 +9,14 @@ const Wishlist = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedFormats, setSelectedFormats] = useState(new Set())
     const [sortOrder, setSortOrder] = useState('none') // 'asc', 'desc', or 'none'
+    const { user } = useAuthContext();
 
     const fetchBooks = useCallback(async () => {
-        const response = await fetch('/api/books')
+        const response = await fetch('/api/books', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
         const json = await response.json()
 
         if (response.ok) {
@@ -19,7 +25,9 @@ const Wishlist = () => {
     }, [dispatch])
 
     useEffect(() => {
-        fetchBooks()
+        if (user) {
+            fetchBooks()
+        }
     }, [fetchBooks, trigger])
 
     const refetchBooks = () => setTrigger(prev => prev + 1)
