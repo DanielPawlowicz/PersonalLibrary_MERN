@@ -1,6 +1,6 @@
 import Bookshelf from './pages/Bookshelf';
 import Navbar from './components/Navbar';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Wishlist from './pages/Wishlist';
 import AddBookForm from './pages/AddBookForm';
 import Login from './pages/Login';
@@ -21,23 +21,23 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Bookshelf />}
+              element={user ? <Bookshelf /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"
-              element={<Login />}
+              element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
               path="/signup"
-              element={<Signup />}
+              element={!user ? <Signup /> : <Navigate to="/" />}
             />
             <Route
               path="/wishlist"
-              element={<Wishlist />}
+              element={user ? <Wishlist /> : <Navigate to="/login" />}
             />
             <Route
               path="/addBook"
-              element={<AddBookForm />}
+              element={user ? <AddBookForm /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
