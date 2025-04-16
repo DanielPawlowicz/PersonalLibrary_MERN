@@ -5,15 +5,25 @@ import { useBooksContext } from '../hooks/useBooksContext';
 import BookUpdateForm from './BookUpdateForm';
 import { FaTrashAlt } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const BookFullDisplay = ({ book, setIsDisplayed, refetchBooks }) => {
 
     const { dispatch } = useBooksContext()
     const [isEdit, setIsEdit] = useState(false);
+    const { user } = useAuthContext();
 
     const handleDelete = async () => {
+
+        if (!user) {
+            return
+        }
+
         const response = await fetch('/api/books/' + book._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 
