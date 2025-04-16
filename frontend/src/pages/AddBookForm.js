@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useBooksContext } from '../hooks/useBooksContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const AddBookForm = () => {
 
@@ -16,9 +17,15 @@ const AddBookForm = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     const [status, setStatus] = useState('In queue')
+    const { user } = useAuthContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
 
         // console.log(tags)
 
@@ -36,7 +43,8 @@ const AddBookForm = () => {
             method: 'POST',
             body: JSON.stringify(book),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()
