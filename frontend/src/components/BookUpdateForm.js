@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useBooksContext } from '../hooks/useBooksContext'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
@@ -16,9 +17,16 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
     const [status, setStatus] = useState(book.status)
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
+    const { user } = useAuthContext();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
 
         // console.log(tags)
 
@@ -34,7 +42,8 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
             method: 'PATCH',
             body: JSON.stringify(updatedBook),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 
