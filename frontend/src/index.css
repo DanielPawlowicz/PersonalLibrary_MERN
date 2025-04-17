@@ -465,3 +465,27 @@ form.login {
   background: #fff;
   border-radius: 4px;
 }
+
+.no-books-container {
+  width: 100%;
+  margin: 20vh auto;
+  text-align: center;
+  color: #bbb;
+}
+
+.no-books-container>h1,
+.no-books-container>h2 {
+  font-weight: 500;
+}
+
+.no-books-container a span {
+  color: #777;
+  text-decoration: underline;
+  text-decoration-color: #777;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.no-books-container a span:hover {
+  transform: scale(1.05);
+}

@@ -3,6 +3,7 @@ import BookDetails from '../components/BookDetails'
 import { useBooksContext } from '../hooks/useBooksContext'
 import { ImSearch } from "react-icons/im";
 import { useAuthContext } from '../hooks/useAuthContext';
+import NoBooksInfo from '../components/NoBooksInfo';
 
 
 const Bookshelf = () => {
@@ -128,22 +129,26 @@ const Bookshelf = () => {
 
 
             <div className='books-by-status'>
-                {['Reading now', 'In queue', 'In the future', 'Already read'].map((status) => {
-                    const booksInStatus = filteredBooks.filter(book => book.status === status)
+                {filteredBooks.length === 0 ? (
+                    <NoBooksInfo />
+                ) : (
+                    ['Reading now', 'In queue', 'In the future', 'Already read'].map((status) => {
+                        const booksInStatus = filteredBooks.filter(book => book.status === status)
 
-                    if (booksInStatus.length === 0) return null
+                        if (booksInStatus.length === 0) return null
 
-                    return (
-                        <div key={status} className='status-section'>
-                            <h5>{status}</h5>
-                            <div className='books'>
-                                {booksInStatus.map(book => (
-                                    <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
-                                ))}
+                        return (
+                            <div key={status} className='status-section'>
+                                <h5>{status}</h5>
+                                <div className='books'>
+                                    {booksInStatus.map(book => (
+                                        <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })
+                )}
             </div>
         </div>
     )

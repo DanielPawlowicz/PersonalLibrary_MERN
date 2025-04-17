@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from 'react'
 import BookDetails from '../components/BookDetails'
 import { useBooksContext } from '../hooks/useBooksContext'
 import { useAuthContext } from '../hooks/useAuthContext';
+import NoBooksInfo from '../components/NoBooksInfo';
 
 const Wishlist = () => {
     const { books, dispatch } = useBooksContext()
@@ -117,11 +118,20 @@ const Wishlist = () => {
                     </label>
                 </div>
             </div>
-            <div className='books'>
-                {filteredBooks.map((book) => (
-                    <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
-                ))}
+            <div>
+
             </div>
+            {filteredBooks.length === 0 ? (
+                <NoBooksInfo />
+            ) : (
+                <div className='books'>{
+
+                    filteredBooks.map((book) => (
+                        <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
+                    ))
+                }
+                </div>
+            )}
         </div>
     )
 }
