@@ -39,7 +39,7 @@ const AddBookForm = () => {
 
         console.log(book)
 
-        const response = await fetch('/api/books/', {
+        const response = await fetch('https://personallibrary-api.onrender.com/api/books/', {
             method: 'POST',
             body: JSON.stringify(book),
             headers: {
