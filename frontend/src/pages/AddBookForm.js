@@ -33,11 +33,11 @@ const AddBookForm = () => {
             ? tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
             : []
 
-        console.log('isOwned: ' + isOwned)
+        // console.log('isOwned: ' + isOwned)
 
         const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, status, link }
 
-        console.log(book)
+        // console.log(book)
 
         const response = await fetch('https://personallibrary-api.onrender.com/api/books/', {
             method: 'POST',
@@ -71,7 +71,7 @@ const AddBookForm = () => {
             setError(null)
             setEmptyFields([])
 
-            console.log('new book added', json)
+            // console.log('new book added', json)
             alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
             dispatch({ type: 'CREATE_BOOK', payload: json })
         }
