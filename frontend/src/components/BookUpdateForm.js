@@ -38,7 +38,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
         const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, status: isOwned && !status ? 'In the future' : status, link }
 
-        const response = await fetch(`https://personallibrary-api.onrender.com/api/books/${book._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books/${book._id}`, {
             method: 'PATCH',
             body: JSON.stringify(updatedBook),
             headers: {

@@ -16,7 +16,7 @@ const Bookshelf = () => {
     const { user } = useAuthContext();
 
     const fetchBooks = useCallback(async () => {
-        const response = await fetch('https://personallibrary-api.onrender.com/api/books', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }

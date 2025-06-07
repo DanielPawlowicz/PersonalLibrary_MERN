@@ -19,7 +19,7 @@ const BookFullDisplay = ({ book, setIsDisplayed, refetchBooks }) => {
             return
         }
 
-        const response = await fetch('https://personallibrary-api.onrender.com/api/books/' + book._id, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books/` + book._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
