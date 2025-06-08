@@ -36,7 +36,7 @@ const Wishlist = () => {
 
     // console.log('All books:', books)
 
-    const wishedBooks = books?.filter(book => book.isOwned === false || book.isOwned === 'false') || []
+    const wishedBooks = books?.filter(book => book.category == 'Wishlist') || []
 
     // console.log(wishedBooks)
 

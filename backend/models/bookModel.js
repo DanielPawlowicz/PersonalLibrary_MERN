@@ -35,10 +35,14 @@ const bookSchema = new Schema({
         type: [String],
         required: false
     },
-    isOwned: {
-        type: Boolean,
+    category: {
+        type: String,
         required: true
     },
+    // isOwned: {
+    //     type: Boolean,
+    //     required: true
+    // },
     status: {
         type: String,
         required: true

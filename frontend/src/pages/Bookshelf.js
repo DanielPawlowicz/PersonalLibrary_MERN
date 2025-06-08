@@ -40,7 +40,7 @@ const Bookshelf = () => {
 
     // console.log('All books:', books)
 
-    const ownedBooks = books?.filter(book => book.isOwned === true || book.isOwned === 'true') || []
+    const ownedBooks = books?.filter(book => book.category == 'Bookshelf') || []
 
     // console.log(ownedBooks)
 
