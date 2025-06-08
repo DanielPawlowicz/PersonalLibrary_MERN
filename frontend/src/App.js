@@ -6,6 +6,7 @@ import AddBookForm from './pages/AddBookForm';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
+import Audiobooks from './pages/Audiobooks';
 
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
             <Route
               path="/wishlist"
               element={user ? <Wishlist /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/audiobooks"
+              element={user ? <Audiobooks /> : <Navigate to="/login" />}
             />
             <Route
               path="/addBook"
