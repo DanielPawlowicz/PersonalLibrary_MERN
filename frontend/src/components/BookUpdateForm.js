@@ -12,7 +12,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
     const [tags, setTags] = useState(book.tags?.join(', ') || '')
     const [description, setDescription] = useState(book.description)
     const [review, setReview] = useState(book.review)
-    const [isOwned, setIsOwned] = useState(book.isOwned)
+    const [category, setCategory] = useState(book.category)
     const [link, setLink] = useState(book.link)
     const [status, setStatus] = useState(book.status)
     const [error, setError] = useState(null)
@@ -36,9 +36,9 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
 
         // console.log(tagArray)
 
-        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, isOwned, status: isOwned && !status ? 'In the future' : status, link }
+        const updatedBook = { title, author, cover, format, tags: tagArray, description, review, category, status: category && !status ? 'In the future' : status, link }
 
-        const response = await fetch(`https://personallibrary-api.onrender.com/api/books/${book._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books/${book._id}`, {
             method: 'PATCH',
             body: JSON.stringify(updatedBook),
             headers: {
@@ -64,7 +64,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
             setTags(book.tags)
             setDescription(book.description)
             setReview(book.review)
-            setIsOwned(book.isOwned)
+            setCategory(book.category)
             setStatus(book.status)
             setLink(book.link)
 
@@ -127,12 +127,13 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
                 <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
                 <select
                     id="place"
-                    onChange={(e) => setIsOwned(e.target.value === 'true')}
-                    value={isOwned ? 'true' : 'false'}
-                    className={emptyFields.includes('isOwned') ? 'error' : ''}
+                    onChange={(e) => setCategory(e.target.value == 'Bookshelf')}
+                    value={category}
+                    className={emptyFields.includes('category') ? 'error' : ''}
                 >
-                    <option value='true'>Bookshelf</option>
-                    <option value='false'>Wishlist</option>
+                    <option value='Bookshelf'>Bookshelf</option>
+                    <option value='Wishlist'>Wishlist</option>
+                    <option value='Audiobooks'>Audiobooks</option>
                 </select>
                 <br />
 
@@ -141,7 +142,7 @@ const BookUpdateForm = ({ book, setIsEdit, refetchBooks }) => {
                 <select
                     value={status || 'In the future'}
                     onChange={(e) => setStatus(e.target.value)}
-                    disabled={!isOwned} // disable if Wishlist
+                    disabled={!category} // disable if Wishlist
                 >
 
                     <option value="In queue">--- Select Status ---</option>

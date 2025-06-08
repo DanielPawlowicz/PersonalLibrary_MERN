@@ -1,11 +1,13 @@
 import { useEffect, useCallback, useState } from 'react'
 import BookDetails from '../components/BookDetails'
 import { useBooksContext } from '../hooks/useBooksContext'
+import { ImSearch } from "react-icons/im";
 import { useAuthContext } from '../hooks/useAuthContext';
 import NoBooksInfo from '../components/NoBooksInfo';
-import { ImSearch } from "react-icons/im";
 
-const Wishlist = () => {
+
+const Audiobooks = () => {
+
     const { books, dispatch } = useBooksContext()
     const [trigger, setTrigger] = useState(0)
     const [searchTerm, setSearchTerm] = useState('')
@@ -27,20 +29,22 @@ const Wishlist = () => {
     }, [dispatch])
 
     useEffect(() => {
+
         if (user) {
             fetchBooks()
         }
+
     }, [fetchBooks, trigger])
 
     const refetchBooks = () => setTrigger(prev => prev + 1)
 
     // console.log('All books:', books)
 
-    const wishedBooks = books?.filter(book => book.category == 'Wishlist') || []
+    const ownedBooks = books?.filter(book => book.category == 'Audiobooks') || []
 
-    // console.log(wishedBooks)
+    // console.log(ownedBooks)
 
-    const filteredBooks = wishedBooks.filter(book => {
+    const filteredBooks = ownedBooks.filter(book => {
         const matchesSearch = [book.title, book.author, ...(book.tags || [])]
             .join(' ')
             .toLowerCase()
@@ -121,22 +125,33 @@ const Wishlist = () => {
                     </label>
                 </div>
             </div>
-            <div>
 
+
+
+            <div className='books-by-status'>
+                {filteredBooks.length === 0 ? (
+                    <NoBooksInfo />
+                ) : (
+                    ['Reading now', 'In queue', 'In the future', 'Already read'].map((status) => {
+                        const booksInStatus = filteredBooks.filter(book => book.status === status)
+
+                        if (booksInStatus.length === 0) return null
+
+                        return (
+                            <div key={status} className='status-section'>
+                                <h5>{status}</h5>
+                                <div className='books'>
+                                    {booksInStatus.map(book => (
+                                        <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })
+                )}
             </div>
-            {filteredBooks.length === 0 ? (
-                <NoBooksInfo />
-            ) : (
-                <div className='books'>{
-
-                    filteredBooks.map((book) => (
-                        <BookDetails key={book._id} thisBook={book} refetchBooks={refetchBooks} />
-                    ))
-                }
-                </div>
-            )}
         </div>
     )
 }
 
-export default Wishlist
+export default Audiobooks

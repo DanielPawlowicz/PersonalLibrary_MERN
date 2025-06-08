@@ -12,7 +12,8 @@ const AddBookForm = () => {
     const [tags, setTags] = useState('')
     const [description, setDescription] = useState('')
     const [review, setReview] = useState('')
-    const [isOwned, setIsOwned] = useState(true)
+    // const [isOwned, setIsOwned] = useState(true)
+    const [category, setCategory] = useState('Bookshelf')
     const [link, setLink] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
@@ -35,11 +36,11 @@ const AddBookForm = () => {
 
         // console.log('isOwned: ' + isOwned)
 
-        const book = { title, author, cover, format, tags: tagArray, description, review, isOwned, status, link }
+        const book = { title, author, cover, format, tags: tagArray, description, review, category, status, link }
 
         // console.log(book)
 
-        const response = await fetch('https://personallibrary-api.onrender.com/api/books/', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books/`, {
             method: 'POST',
             body: JSON.stringify(book),
             headers: {
@@ -54,8 +55,8 @@ const AddBookForm = () => {
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
-            const ownedBoolean = isOwned === 'true';
-            const place = ownedBoolean ? 'Bookshelf' : 'Wishlist';
+            // const ownedBoolean = isOwned === 'Bookshelf';
+            // const place = ownedBoolean ? 'Bookshelf' : 'Wishlist';
 
             setTitle('')
             setAuthor('')
@@ -64,7 +65,7 @@ const AddBookForm = () => {
             setTags('')
             setDescription('')
             setReview('')
-            setIsOwned(true)
+            setCategory('Bookshelf')
             setStatus('In queue')
             setLink('')
 
@@ -72,7 +73,7 @@ const AddBookForm = () => {
             setEmptyFields([])
 
             // console.log('new book added', json)
-            alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${place}`)
+            alert(`Book "${json.title}" from ${json.author} has been added succesfully to the ${category}`)
             dispatch({ type: 'CREATE_BOOK', payload: json })
         }
     }
@@ -107,6 +108,19 @@ const AddBookForm = () => {
                     value={cover}
                 />
 
+                <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
+                <select
+                    id="place"
+                    onChange={(e) => setCategory(e.target.value)}
+                    value={category}
+                    className={emptyFields.includes('category') ? 'error' : ''}
+                >
+                    <option value='Bookshelf'>Bookshelf</option>
+                    <option value='Wishlist'>Wishlist</option>
+                    <option value='Audiobooks'>Audiobooks</option>
+                </select>
+                <br />
+
                 <label>Format:<span className='required'>&nbsp;*</span></label>
                 <select
                     id="format"
@@ -121,24 +135,12 @@ const AddBookForm = () => {
                 </select>
                 <br />
 
-                <label>Where to save this book? <span className='required'>&nbsp;*</span></label>
-                <select
-                    id="place"
-                    onChange={(e) => setIsOwned(e.target.value)}
-                    value={isOwned}
-                    className={emptyFields.includes('isOwned') ? 'error' : ''}
-                >
-                    <option value='true'>Bookshelf</option>
-                    <option value='false'>Wishlist</option>
-                </select>
-                <br />
-
                 <label>Status:</label>
                 <span>(You can choose it only if you selected "Bookshelf" as a place to store this book)</span>
                 <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    disabled={isOwned === 'false'} // disable if Wishlist
+                    disabled={category === 'Wishlist'} // disable if Wishlist
                 >
                     <option value="In queue">In queue</option>
                     <option value="Reading now">Reading now</option>

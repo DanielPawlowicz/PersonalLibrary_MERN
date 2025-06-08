@@ -16,7 +16,7 @@ const Bookshelf = () => {
     const { user } = useAuthContext();
 
     const fetchBooks = useCallback(async () => {
-        const response = await fetch('https://personallibrary-api.onrender.com/api/books', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/books`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -40,7 +40,7 @@ const Bookshelf = () => {
 
     // console.log('All books:', books)
 
-    const ownedBooks = books?.filter(book => book.isOwned === true || book.isOwned === 'true') || []
+    const ownedBooks = books?.filter(book => book.category == 'Bookshelf') || []
 
     // console.log(ownedBooks)
 

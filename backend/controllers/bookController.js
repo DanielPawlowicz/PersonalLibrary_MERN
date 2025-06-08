@@ -30,7 +30,7 @@ const getBook = async (req, res) => {
 
 // create new Book
 const createBook = async (req, res) => {
-    const { title, author, cover, format, tags, description, review, notes, isOwned, status, link } = req.body
+    const { title, author, cover, format, tags, description, review, notes, category, status, link } = req.body
 
     let emptyFields = []
 
@@ -43,8 +43,8 @@ const createBook = async (req, res) => {
     if (!format) {
         emptyFields.push('format')
     }
-    if (!isOwned) {
-        emptyFields.push('isOwned')
+    if (!category) {
+        emptyFields.push('category')
     }
     if (!status) {
         emptyFields.push('status')
@@ -56,7 +56,7 @@ const createBook = async (req, res) => {
     // add doc to db
     try {
         const user_id = req.user._id
-        const book = await Book.create({ title, author, cover, format, tags, description, review, notes, isOwned, status, link, user_id })
+        const book = await Book.create({ title, author, cover, format, tags, description, review, notes, category, status, link, user_id })
         res.status(200).json(book)
     } catch (err) {
         res.status(400).json({ error: err.message })
