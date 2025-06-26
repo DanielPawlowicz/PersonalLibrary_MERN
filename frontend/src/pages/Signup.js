@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
+import { FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
 
     const [email, setEmail] = useState('')
     const [password, setpassword] = useState('')
     const { signup, error, isLoading } = useSignup()
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(prev => !prev);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,11 +33,14 @@ const Signup = () => {
 
             <label>Password: </label>
             <input
-                type="password"
+                type={passwordVisible ? 'text' : 'password'}
                 onChange={(e) => { setpassword(e.target.value) }}
                 value={password}
+                className="passwordInput"
             />
-            {/* <button>Sign Up</button> */}
+            <FaEyeSlash className='togglePassword' onClick={togglePasswordVisibility} />
+            {/* <button>Log in</button> */}
+            <br />
             <button disabled={isLoading}>Sign Up</button>
             {error && <div className='error'>{error}</div>}
         </form>

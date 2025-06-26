@@ -489,3 +489,16 @@ form.login {
 .no-books-container a span:hover {
   transform: scale(1.05);
 }
+
+.togglePassword {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 25px;
+  color: #333;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.passwordInput {
+  display: inline-block;
+}
