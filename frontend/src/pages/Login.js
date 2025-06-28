@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLogin } from '../hooks/useLogin'
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom"
 
 const Login = () => {
 
@@ -42,7 +43,9 @@ const Login = () => {
             {/* <button>Log in</button> */}
             <br />
             <button disabled={isLoading}>Log in</button>
+            <Link to="/forgot-password" className='forgot-password-link'>Forgot Password?</Link>
             {error && <div className='error'>{error}</div>}
+
         </form>
     )
 }

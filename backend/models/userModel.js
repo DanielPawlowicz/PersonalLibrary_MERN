@@ -13,7 +13,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 })
 
 // static signup method
