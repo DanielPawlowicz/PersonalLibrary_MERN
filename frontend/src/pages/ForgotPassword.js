@@ -28,8 +28,8 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div>
-            <h2>Reset your password</h2>
+        <div className='reset-password-container'>
+            <h2>Give an Email addres to reset your password</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="email"

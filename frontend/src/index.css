@@ -509,3 +509,14 @@ form.login {
   color: #333;
   letter-spacing: 0.6px;
 }
+
+.reset-password-input {
+  display: inline-block;
+  width: 70%;
+}
+
+.reset-password-container {
+  width: 600px;
+  margin: 0 auto;
+  padding-top: 20vh;
+}
