@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
 import Audiobooks from './pages/Audiobooks';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 
 function App() {
@@ -32,6 +34,11 @@ function App() {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
+            <Route
+              path="/forgot-password"
+              element={!user ? <ForgotPassword /> : <Navigate to="/" />}
+            />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route
               path="/wishlist"
               element={user ? <Wishlist /> : <Navigate to="/login" />}
