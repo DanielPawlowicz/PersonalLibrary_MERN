@@ -53,6 +53,69 @@ header h4 {
   font-weight: 500;
 }
 
+/* Hamburger styles */
+.hamburger-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Responsive layout */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .hamburger-icon {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 90%;
+    flex-direction: column;
+    /* align-items: center; */
+    text-align: center;
+    background: white;
+    padding: 20px;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a,
+  .nav-links nav {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .nav-links h2,
+  .nav-links h4 {
+    margin: 0;
+  }
+
+  .nav-links nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-container {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 
 /* add new Book form */
 
